@@ -1,70 +1,105 @@
-// labyrinth.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+#include <GL/glew.h>
+#include <math.h>
+#include <stdlib.h>
+#include <GL/freeglut.h>
+#include <glm/glm.hpp> // vec2, vec3, mat4, radians
+#include <glm/ext.hpp> // perspective, translate, rotate
 
-#include <glew.h>
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
 
-int main()
+bool keys[256], specialkeys[256];
+
+void initOpenGL()
 {
-	// create the window
-	sf::Window window(sf::VideoMode(800, 600), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
-	window.setVerticalSyncEnabled(true);
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+}
 
-	// GLEW initialization
+void handleKeys()
+{
+	if (keys[27]) exit(0);
+}
+
+void drawScene()
+{
 	glewInit();
-	if (glewInit() != GLEW_OK) return 911;
+	handleKeys();
+	glm::mat4 Model = glm::mat4(1.0f);
+	unsigned int l = 9;
+	glGenBuffers(1, &l);
 
-	// activate the window
-	window.setActive(true);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glLoadIdentity();
 
-	// load resources, initialize the OpenGL states, ...
+	gluLookAt(0.8, 0.8, 2.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //new
 
-	// run the main loop
-	bool running = true;
-	while (running)
-	{
-		// handle events
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				// end the program
-				running = false;
-			}
-			else if (event.type == sf::Event::Resized)
-			{
-				// adjust the viewport when the window is resized
-				glViewport(0, 0, event.size.width, event.size.height);
-			}
-		}
+	//uklad
+	glBegin(GL_LINES); //new
+	 //Osie ukladu
+	glColor3f(1.0, 0.0, 0.0); glVertex3f(0, 0, 0); glVertex3f(1.0, 0, 0); //new
+	glColor3f(0.0, 1.0, 0.0); glVertex3f(0, 0, 0); glVertex3f(0, 1.0, 0); //new
+	glColor3f(0.0, 0.0, 1.0); glVertex3f(0, 0, 0); glVertex3f(0, 0, 1.0); //new
+	glEnd(); //new
 
-		// clear the buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//Linie przerywane
+	glEnable(GL_LINE_STIPPLE); //new
+	glLineStipple(2, 0xAAAA); //new
+	glBegin(GL_LINES); //new
+	glColor3f(1.0, 0.0, 0.0); glVertex3f(0, 0, 0); glVertex3f(-1.0, 0, 0); //new
+	glColor3f(0.0, 1.0, 0.0); glVertex3f(0, 0, 0); glVertex3f(0, -1.0, 0); //new
+	glColor3f(0.0, 0.0, 1.0); glVertex3f(0, 0, 0); glVertex3f(0, 0, -1.0); //new
+	glEnd(); //new
+	glDisable(GL_LINE_STIPPLE); //new
 
-		// draw...
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.0f, 0.9f);
-		glVertex2f(0.5f, -0.5f);
-		glEnd();
 
-		// end the current frame (internally swaps the front and back buffers)
-		window.display();
-	}
+	glutSwapBuffers();
+	glutPostRedisplay();
+}
 
-	// release resources...
+void reshapeScreen(int w, int h)
+{
+	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 0.1f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
 
+void keyDown(unsigned char key, int x, int y)
+{
+	keys[key] = true;
+}
+void keyUp(unsigned char key, int x, int y)
+{
+	keys[key] = false;
+}
+void specialKeyDown(int key, int x, int y)
+{
+	specialkeys[key] = true;
+}
+void specialKeyUp(int key, int x, int y)
+{
+	specialkeys[key] = false;
+}
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowSize(640, 480);
+	glutInitWindowPosition(0, 0);
+
+	glutCreateWindow("Lab01 - stage 0");
+
+	initOpenGL();
+	glutDisplayFunc(drawScene);
+	glutReshapeFunc(reshapeScreen);
+
+	glutKeyboardFunc(keyDown);
+	glutKeyboardUpFunc(keyUp);
+	glutSpecialFunc(specialKeyDown);
+	glutSpecialUpFunc(specialKeyUp);
+
+	glutMainLoop();
 	return 0;
 }
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
