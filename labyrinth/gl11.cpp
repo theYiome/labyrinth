@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
-#include <GL\openglut.h>
-#include "materials.h"          
+#include <GL/freeglut.h>
+#include "materials.h"          //new
 
 bool keys[256],specialkeys[256];
 
@@ -35,19 +35,19 @@ void initOpenGL()
  
  
  glEnable(GL_NORMALIZE);
- //glEnable(GL_COLOR_MATERIAL);
+ glEnable(GL_COLOR_MATERIAL);
  
- GLfloat light_ambient_global [4] = { 0.5,0.5,0.5,1 };          
- glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light_ambient_global);   
+ GLfloat light_ambient_global [4] = { 0.5,0.5,0.5,1 };          //new
+ glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light_ambient_global);   //new
 }
 
 void handleKeys()
 {
  if (keys[27]) exit(0);
- if (specialkeys[100]) camera_fi-=0.001;        //lewo
- if (specialkeys[102]) camera_fi+=0.001;        //prawo
- if (specialkeys[101]) camera_theta+=0.001;     //gora
- if (specialkeys[103]) camera_theta-=0.001;     //dol
+ if (specialkeys[100]) camera_fi-=0.01;        //lewo
+ if (specialkeys[102]) camera_fi+=0.01;        //prawo
+ if (specialkeys[101]) camera_theta+=0.01;     //gora
+ if (specialkeys[103]) camera_theta-=0.01;     //dol
 
  if (keys[113]) pos_x-=0.001; if (keys[119]) pos_x+=0.001;
  if (keys[97] ) pos_y-=0.001; if (keys[115]) pos_y+=0.001;
@@ -107,7 +107,7 @@ void drawScene()
  glEnd();
  glDisable(GL_LINE_STIPPLE);
 
- glEnable(GL_LIGHTING);
+ //szescian
 
  //transformacje
  glTranslatef(pos_x,pos_y,pos_z);
@@ -116,22 +116,98 @@ void drawScene()
  glRotatef(rot_z,0,0,1);
  glScalef(scale_x,scale_y,scale_z);
 
- glMaterialfv(GL_FRONT,GL_AMBIENT,YellowRubberAmbient);
- glMaterialfv(GL_FRONT,GL_DIFFUSE,YellowRubberDiffuse);
- glMaterialfv(GL_FRONT,GL_SPECULAR,YellowRubberSpecular);
- glMaterialf(GL_FRONT,GL_SHININESS,YellowRubberShininess);
+ glLineWidth(2.0);
+ glColor3f(0,0,0);
+ glBegin(GL_LINES);
+  glVertex3f(0.3,0.3,0.3);glVertex3f(0.3,0.3,-0.3);
+  glVertex3f(0.3,0.3,0.3);glVertex3f(0.3,-0.3,0.3);
+  glVertex3f(0.3,0.3,0.3);glVertex3f(-0.3,0.3,0.3);
 
- glBegin(GL_QUADS);
- glNormal3f(0,1,0);
- for (float x=-0.7f;x<0.7f;x=x+0.1f)
-  for (float y=-0.7f;y<0.7f;y=y+0.1f)
-   {
-    glVertex3f(x,0.0,y);
-    glVertex3f(x+0.1,0.0,y);
-    glVertex3f(x+0.1,0.0,y+0.1);
-    glVertex3f(x,0.0,y+0.1);
-   }
+  glVertex3f(-0.3,-0.3,-0.3);glVertex3f(0.3,-0.3,-0.3);
+  glVertex3f(-0.3,-0.3,-0.3);glVertex3f(-0.3,0.3,-0.3);
+  glVertex3f(-0.3,-0.3,-0.3);glVertex3f(-0.3,-0.3,0.3);
+
+  glVertex3f(-0.3,0.3,-0.3);glVertex3f(-0.3,0.3,0.3);
+  glVertex3f(-0.3,0.3,-0.3);glVertex3f(0.3,0.3,-0.3);
+  glVertex3f(-0.3,-0.3,0.3);glVertex3f(-0.3,0.3,0.3);
+  glVertex3f(-0.3,-0.3,0.3);glVertex3f(0.3,-0.3,0.3);
+  glVertex3f(0.3,-0.3,-0.3);glVertex3f(0.3,-0.3,0.3);
+  glVertex3f(0.3,-0.3,-0.3);glVertex3f(0.3,0.3,-0.3);
  glEnd();
+ glLineWidth(1.0);
+
+ //kolorowy tr.
+ glBegin(GL_TRIANGLES);
+  glColor3f(1.0,0.0,0.0);glVertex3f(-0.3,0.3,0.3);
+  glColor3f(0.0,1.0,0.0);glVertex3f(0.3,-0.3,0.3);
+  glColor3f(0.0,0.0,1.0);glVertex3f(0.3,0.3,-0.3);
+ glEnd();
+
+ glEnable(GL_LIGHTING);
+
+ glPushMatrix();
+  glColor3f(1.0,1.0,0.0);
+  glTranslatef(-1.0,0.0,0.0);
+  glutSolidTorus(0.025,0.25,10,30);
+ glPopMatrix();
+
+ glPushMatrix();
+  glColor3f(0.0,0.0,0.0);
+  glTranslatef(1.0,0.0,0.0);
+  glScalef(0.2,0.2,0.2);
+  glutSolidIcosahedron();
+ glPopMatrix();
+
+ glPushMatrix();
+  glColor3f(0.0,1.0,1.0);
+  glTranslatef(0.0,0.5,0.0);
+  glRotatef(-90.0,1.0,0.0,0.0);
+  glutSolidCone(0.2,0.5,15,3);
+ glPopMatrix();
+
+ glPushMatrix();
+  double clip_plane1[]={-1.0,0.0,0.0,-0.10};
+  double clip_plane2[]={1.0,0.0,0.0,0.10};
+  double clip_plane3[]={-1.0,0.0,0.0,0.10};
+  double clip_plane4[]={1.0,0.0,0.0,-0.10};
+
+  glTranslatef(0.0,-0.5,0.0);
+
+  glClipPlane(GL_CLIP_PLANE1,clip_plane1);
+  glClipPlane(GL_CLIP_PLANE2,clip_plane2);
+  glClipPlane(GL_CLIP_PLANE3,clip_plane3);
+  glClipPlane(GL_CLIP_PLANE4,clip_plane4);
+
+  glEnable(GL_CLIP_PLANE1);
+  glColor3f(1.0,0.0,0.0); glutSolidTeapot(0.2);
+  glDisable(GL_CLIP_PLANE1);
+
+  glEnable(GL_CLIP_PLANE2); glEnable(GL_CLIP_PLANE3);
+  glColor3f(0.0,1.0,0.0); glutSolidTeapot(0.2);
+  glDisable(GL_CLIP_PLANE2);glDisable(GL_CLIP_PLANE3);
+
+  glEnable(GL_CLIP_PLANE4);
+  glColor3f(0.0,0.0,1.0); glutSolidTeapot(0.2);
+  glDisable(GL_CLIP_PLANE4);
+ glPopMatrix();
+
+ glDisable(GL_COLOR_MATERIAL);       //new
+ glPushMatrix();
+  glMaterialfv(GL_FRONT,GL_AMBIENT,PolishedGoldAmbient);        //new
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,PolishedGoldDiffuse);        //new
+  glMaterialfv(GL_FRONT,GL_SPECULAR,PolishedGoldSpecular);      //new
+  glMaterialf(GL_FRONT,GL_SHININESS,PolishedGoldShininess);     //new
+  //glMaterialf(GL_FRONT,GL_SHININESS,100);
+  glTranslatef(0.0,0.0,0.8);
+  glutSolidSphere(0.2,10,10);
+ glPopMatrix();
+ glEnable(GL_COLOR_MATERIAL);       //new
+
+ glPushMatrix();
+  glColor3f(0.0,0.0,1.0);
+  glTranslatef(0.0,0.0,-0.8);
+  glutSolidSphere(0.2,10,10);
+ glPopMatrix();
 
  glutSwapBuffers();
  glutPostRedisplay();
