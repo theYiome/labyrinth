@@ -2,17 +2,24 @@
 #include "GL/freeglut.h"
 
 Cube::Cube() {
-}
-
-
-Cube::~Cube() {
+	position.x = position.y = position.z = 0;
+	velocity.x = velocity.y = velocity.z = 0;
+	color.r = color.g = color.b = 0;
+	
+	velocity.x = 0.4;
+	color.b = 0.5;
+	size = 0.5;
 }
 
 void Cube::draw() {
-	glColor3f(0.5, 0, 0);
+	glColor3f(color.r, color.g, color.b);
 
 	glPushMatrix();
-		glTranslatef(0.5, 0, 0);
-		glutSolidCube(0.5f);
+		glTranslatef(position.x, position.y, position.z);
+		glutSolidCube(size);
 	glPopMatrix();
+}
+
+void Cube::update(GLfloat dt) {
+	position = position + (velocity*dt);
 }

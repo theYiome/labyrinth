@@ -1,8 +1,7 @@
 #include <GL/freeglut.h>
 #include "mainLoop.h"
 
-void reshapeScreen(int w, int h)
-{
+void reshapeScreen(int w, int h) {
 	//window size
 	int sw, sh;
 
@@ -16,9 +15,8 @@ void reshapeScreen(int w, int h)
 	glLoadIdentity();
 }
 
-void initOpenGL()
-{
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+void initOpenGL() {
+	glClearColor(0, 0, 0, 0);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_LIGHTING);
@@ -56,5 +54,7 @@ int main(int argc, char** argv)
 	//glutSpecialUpFunc(specialKeyUp);
 
 	glutMainLoop();
+
+	//shutdown();
 	return 0;
 }

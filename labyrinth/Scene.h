@@ -7,7 +7,7 @@ class Scene
 	std::vector <Cube> cubeContainer;
 public:
 
-	void update(void);
+	void update(GLfloat);
 
 	std::vector <Drawable*> getDrawables(void);
 

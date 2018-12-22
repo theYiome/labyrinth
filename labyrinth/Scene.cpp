@@ -1,15 +1,15 @@
 #include "Scene.h"
 
-void Scene::update(void)
+void Scene::update(GLfloat dt)
 {
+	for (auto &var : cubeContainer) var.update(dt);
 }
 
 std::vector<Drawable*> Scene::getDrawables(void)
 {
 	std::vector<Drawable*> toDraw;
-	for (auto var : cubeContainer) {
-		toDraw.push_back(&var);
-	}
+
+	for (auto &var : cubeContainer) toDraw.push_back(&var);
 
 	return toDraw;
 }
