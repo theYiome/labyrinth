@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "GL\glew.h"
 #include "GL\freeglut.h"
+#include "GLM/glm.hpp"
 #include "materials.h"          
 
 bool keys[256], specialkeys[256];
@@ -43,7 +44,7 @@ void initOpenGL()
 
 
 	glEnable(GL_NORMALIZE);
-	glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_COLOR_MATERIAL);
 
 	GLfloat light_ambient_global[4] = { 0.5, 0.5, 0.5, 1 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient_global);
@@ -161,7 +162,7 @@ void drawScene()
 			v[2] = flag_z[x + 1][y] - flag_z[x][y];
 
 			cross_product(u, v, res1);
-
+			
 			u[0] = flag_x[x + 1][y] - flag_x[x][y];
 			u[1] = flag_y[x + 1][y] - flag_y[x][y];
 			u[2] = flag_z[x + 1][y] - flag_z[x][y];
@@ -218,13 +219,13 @@ void drawScene()
 
 	
 	glDisable(GL_LIGHTING);
-	glColor3f(0,0,0.8);
+	glColor3f(1,0,0);
 	glBegin(GL_LINES);
 	for (x=1;x<19;x++)
 	for (y=1;y<19;y++)
 	{
-	glVertex3f(flag_x[x][y],flag_y[x][y],flag_z[x][y]);
-	glVertex3f(flag_x[x][y]+flag_nx[x][y],flag_y[x][y]+flag_ny[x][y],flag_z[x][y]+flag_nz[x][y]);
+		glVertex3f(flag_x[x][y],flag_y[x][y],flag_z[x][y]);
+		glVertex3f(flag_x[x][y]+flag_nx[x][y],flag_y[x][y]+flag_ny[x][y],flag_z[x][y]+flag_nz[x][y]);
 	}
 	glEnd();
 	glEnable(GL_LIGHTING);

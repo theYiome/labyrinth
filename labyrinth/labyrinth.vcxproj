@@ -167,10 +167,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="labyrinth.cpp" />
+    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="drawWorld.h" />
+    <ClInclude Include="mainLoop.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
