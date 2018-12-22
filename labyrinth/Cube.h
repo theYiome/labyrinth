@@ -9,10 +9,10 @@ class Cube :
 	glm::tvec3 <GLfloat> position;
 	glm::tvec3 <GLfloat> velocity;
 	glm::tvec3 <GLfloat> color;
-	GLfloat size;
+	GLfloat size = 0.5;
 
 public:
-	Cube();
+	Cube(GLfloat, GLfloat);
 	~Cube() = default;
 	void draw(void);
 	void update(GLfloat);

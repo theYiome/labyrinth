@@ -16,7 +16,11 @@ std::vector<Drawable*> Scene::getDrawables(void)
 
 Scene::Scene()
 {
-	cubeContainer.push_back(Cube());
+	cubeContainer.push_back(Cube(0, 0));
+	cubeContainer.push_back(Cube(0.5, 0));
+	cubeContainer.push_back(Cube(1, 0));
+	cubeContainer.push_back(Cube(1, 0.5));
+	cubeContainer.push_back(Cube(1, -0.5));
 }
 
 

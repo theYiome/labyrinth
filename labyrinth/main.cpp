@@ -2,11 +2,6 @@
 #include "mainLoop.h"
 
 void reshapeScreen(int w, int h) {
-	//window size
-	int sw, sh;
-
-	sw = w;
-	sh = h;
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -38,7 +33,12 @@ void initOpenGL() {
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+
+	//Initalize with multisampling for extra smoothnes
+	glutSetOption(GLUT_MULTISAMPLE, 8);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
+	glEnable(GLUT_MULTISAMPLE);
+
 	glutInitWindowSize(1200, 800);
 	glutInitWindowPosition(0, 0);
 
@@ -47,6 +47,7 @@ int main(int argc, char** argv)
 	initOpenGL();
 	glutDisplayFunc(mainLoop);
 	glutReshapeFunc(reshapeScreen);
+	glutCloseFunc(shutdown);
 
 	//glutKeyboardFunc(keyDown);
 	//glutKeyboardUpFunc(keyUp);
@@ -55,6 +56,5 @@ int main(int argc, char** argv)
 
 	glutMainLoop();
 
-	//shutdown();
 	return 0;
 }

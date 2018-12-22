@@ -10,10 +10,10 @@ typedef std::chrono::milliseconds ms;
 
 using namespace std::chrono_literals;
 
-static Scene* mainScene = new Scene();
+static Scene* currentScene = new Scene();
 
 void shutdown() {
-	//if (mainScene) delete mainScene;
+	delete currentScene;
 }
 
 
@@ -22,7 +22,8 @@ void mainLoop() {
 	static auto t0 = Time::now();
 	ms fs = std::chrono::duration_cast<ms>(Time::now() - t0);
 	GLfloat dt = fs.count()/(1000.0);
-	//fixing if dt to high
+
+	//fixing if dt gets to high
 	dt = dt < 0.03 ? dt : 0.03;
 	t0 = Time::now();
 
@@ -31,9 +32,9 @@ void mainLoop() {
 	and render updated stuff below
 	*/
 
-	mainScene->update(dt);
+	currentScene->update(dt);
 	
-	drawWorld(mainScene->getDrawables());
+	drawWorld(currentScene->getDrawables());
 	
 }
 

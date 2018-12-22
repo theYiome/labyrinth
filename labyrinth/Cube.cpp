@@ -1,14 +1,19 @@
 #include "Cube.h"
 #include "GL/freeglut.h"
 
-Cube::Cube() {
+Cube::Cube(GLfloat xPos, GLfloat yPos) {
 	position.x = position.y = position.z = 0;
 	velocity.x = velocity.y = velocity.z = 0;
 	color.r = color.g = color.b = 0;
 	
-	velocity.x = 0.4;
-	color.b = 0.5;
-	size = 0.5;
+	color.b = 1;
+
+	velocity.z = -0.3;
+	velocity.y = -0.2;
+	velocity.x = -0.3;
+
+	position.x = xPos;
+	position.y = yPos;
 }
 
 void Cube::draw() {
