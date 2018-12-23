@@ -34,7 +34,7 @@ void mainLoop() {
 
 	currentScene->update(dt);
 	
-	drawWorld(currentScene->getDrawables());
+	drawWorld(currentScene->getDrawables(), currentScene->getCamera());
 	
 }
 

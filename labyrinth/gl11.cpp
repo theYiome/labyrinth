@@ -28,10 +28,10 @@ glEnable(GL_DEPTH_TEST);
 glEnable(GL_LIGHTING);
 glEnable(GL_LIGHT0);
  
-/*  GLfloat light0_specular [4] = { 1.0,1.0,1.0,1 };
+GLfloat light0_specular [4] = { 1.0,1.0,1.0,1 };
 GLfloat light0_diffuse [4] = { 0.5,0.5,0.5,1 };
 glLightfv(GL_LIGHT0,GL_SPECULAR,light0_specular);
-glLightfv(GL_LIGHT0,GL_DIFFUSE,light0_diffuse);*/
+glLightfv(GL_LIGHT0,GL_DIFFUSE,light0_diffuse);
  
  
 glEnable(GL_NORMALIZE);
@@ -193,11 +193,11 @@ glPopMatrix();
 
 glDisable(GL_COLOR_MATERIAL);       //new
 glPushMatrix();
-glMaterialfv(GL_FRONT, GL_AMBIENT, PolishedGoldAmbient);        //new
-glMaterialfv(GL_FRONT, GL_DIFFUSE, PolishedGoldDiffuse);        //new
-glMaterialfv(GL_FRONT, GL_SPECULAR, PolishedGoldSpecular);      //new
-glMaterialf(GL_FRONT, GL_SHININESS, PolishedGoldShininess);     //new
-//glMaterialf(GL_FRONT,GL_SHININESS,100);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, PolishedGoldAmbient);        //new
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, PolishedGoldDiffuse);        //new
+	glMaterialfv(GL_FRONT, GL_SPECULAR, PolishedGoldSpecular);      //new
+	glMaterialf(GL_FRONT, GL_SHININESS, PolishedGoldShininess);     //new
+
 glTranslatef(0.0, 0.0, 0.8);
 glutSolidSphere(0.2, 32, 32);
 glPopMatrix();
