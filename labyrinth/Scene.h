@@ -11,8 +11,8 @@ class Scene
 	std::vector <Cube> cubeContainer;
 
 public:
-	const int width = 5;
-	const int height = 9;
+	const int width = 31;
+	const int height = 43;
 	Node *labyrinth = nullptr;
 
 	Player player;
