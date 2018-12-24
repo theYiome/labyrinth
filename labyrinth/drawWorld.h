@@ -18,12 +18,22 @@ void drawWorld(const std::vector<Drawable*> toDraw, Camera &cam) {
 		cam.rotation.x, cam.rotation.y, cam.rotation.z
 	);
 
-	GLfloat light_position[4] = { 2, -2, 3, 0};           //new
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glEnable(GL_LIGHT0);
+	//GLfloat light_position[4] = { 2, -2, 3, 0};           //new
+	//glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	//glEnable(GL_LIGHT0);
 
-	glEnable(GL_COLOR_MATERIAL);       //new
-	glEnable(GL_COLOR);
+	//glEnable(GL_COLOR_MATERIAL);       //new
+	//glEnable(GL_COLOR);
+
+	const GLfloat width = 15, height = 21, depth = 0.24;
+
+	glColor3f(0.3, 0.3, 0.3);
+	glBegin(GL_POLYGON);
+		glVertex3f(-0.25, -0.25, depth);
+		glVertex3f(height*0.5f - 0.25, 0 - 0.25, depth);
+		glVertex3f(height*0.5f - 0.25, width*0.5f - 0.25, depth);
+		glVertex3f(0 - 0.25, width*0.5f - 0.25, depth);
+	glEnd();
 
 	//glBegin(GL_TRIANGLES);
 	//glColor3f(1.0, 1.0, 1.0);

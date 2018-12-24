@@ -9,11 +9,12 @@ Player::Player() {
 }
 
 void Player::draw(void) {
-	glColor3f(0, 0.6, 0);
+	glColor3f(0.8, 0, 0);
 
 	glPushMatrix();
 		glTranslatef(position.x, position.y, position.z);
-		glutSolidSphere(0.2, 64, 64);
+		//glutSolidSphere(0.2, 64, 64);
+		glutSolidCube(0.4);
 	glPopMatrix();
 }
 

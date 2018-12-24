@@ -59,11 +59,11 @@ void inputHandler(unsigned char key, int x, int y) {
 		break;
 
 		case '1':
-			currentScene->getCamera().desiredHeight++;
+			currentScene->getCamera().desiredHeight+= 0.11;
 		break;
 
 		case '2':
-			currentScene->getCamera().desiredHeight--;
+			currentScene->getCamera().desiredHeight-= 0.11;
 		break;
 
 	}
