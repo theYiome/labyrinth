@@ -17,17 +17,56 @@ void initOpenGL() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
-	/*  GLfloat light0_specular [4] = { 1.0,1.0,1.0,1 };
-	 GLfloat light0_diffuse [4] = { 0.5,0.5,0.5,1 };
-	 glLightfv(GL_LIGHT0,GL_SPECULAR,light0_specular);
-	 glLightfv(GL_LIGHT0,GL_DIFFUSE,light0_diffuse);*/
-
-
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
 	GLfloat light_ambient_global[4] = { 0.5,0.5,0.5,1 };          //new
+	GLfloat light0_specular[4] = { 1.0,1.0,1.0,1 };
+	GLfloat light0_diffuse[4] = { 0.5,0.5,0.5,1 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient_global);   //new
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+
+}
+
+void inputHandler(unsigned char key, int x, int y) {
+	
+	if (currentScene->getThingIn(currentScene->player.squarePosition.x, currentScene->player.squarePosition.y) == '!') {
+		//GG WON
+		exit(0);
+	}
+
+
+	switch (key) {
+		case 'a':
+			if (currentScene->getThingIn(currentScene->player.squarePosition.x, currentScene->player.squarePosition.y - 1) != '#')
+				currentScene->player.squarePosition.y--;
+		break;
+
+		case 'd':
+			if (currentScene->getThingIn(currentScene->player.squarePosition.x, currentScene->player.squarePosition.y + 1) != '#')
+				currentScene->player.squarePosition.y++;
+		break;
+
+		case 'w':
+			if (currentScene->getThingIn(currentScene->player.squarePosition.x - 1, currentScene->player.squarePosition.y) != '#')
+				currentScene->player.squarePosition.x--;
+		break;
+
+		case 's':
+			if(currentScene->getThingIn(currentScene->player.squarePosition.x + 1, currentScene->player.squarePosition.y) != '#')
+				currentScene->player.squarePosition.x++;
+		break;
+
+		case '1':
+			currentScene->getCamera().desiredHeight++;
+		break;
+
+		case '2':
+			currentScene->getCamera().desiredHeight--;
+		break;
+
+	}
 }
 
 int main(int argc, char** argv)
@@ -50,7 +89,7 @@ int main(int argc, char** argv)
 	glutCloseFunc(shutdown);
 
 	//glutKeyboardFunc(keyDown);
-	//glutKeyboardUpFunc(keyUp);
+	glutKeyboardFunc(inputHandler);
 	//glutSpecialFunc(specialKeyDown);
 	//glutSpecialUpFunc(specialKeyUp);
 

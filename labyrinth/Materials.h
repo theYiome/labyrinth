@@ -18,3 +18,8 @@ const GLfloat PolishedGoldAmbient[4] = { 0.247250, 0.224500, 0.064500, 1.000000 
 const GLfloat PolishedGoldDiffuse[4] = { 0.346150, 0.314300, 0.090300, 1.000000 };
 const GLfloat PolishedGoldSpecular[4] = { 0.797357, 0.723991, 0.208006, 1.000000 };
 const GLfloat PolishedGoldShininess = 83.2;
+
+const GLfloat testAmbient[4] = { 1.0f, 0.5f, 0.31f, 1 };
+const GLfloat testDiffuse[4] = { 1.0f, 0.5f, 0.31f, 1 };
+const GLfloat testSpecular[4] = { 0.5f, 0.5f, 0.5f, 1 };
+const GLfloat testShininess = 32.0f;
