@@ -17,6 +17,8 @@ Cube::Cube(int xPlace, int yPlace) {
 	velocity.x = velocity.y = velocity.z = 0;
 	color.r = color.g = color.b = 1;
 
+	color.b = color.g = 0;
+
 	position.x = xPlace * 0.5f;
 	position.y = yPlace * 0.5f;
 
