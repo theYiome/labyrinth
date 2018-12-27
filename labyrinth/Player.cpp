@@ -2,10 +2,8 @@
 
 Player::Player() {
 	squarePosition.x = squarePosition.y = 1;
-
-	position.x = position.y = 0.5f;
-	position.z = 0.5f;
-	velocity.x = velocity.y = velocity.z = 0;
+	targetPosition.z = 0.5f;
+	speedFactor = 16;
 }
 
 void Player::draw(void) {
@@ -13,13 +11,6 @@ void Player::draw(void) {
 
 	glPushMatrix();
 		glTranslatef(position.x, position.y, position.z);
-		//glutSolidSphere(0.2, 64, 64);
-		glutSolidCube(0.4);
+		glutSolidSphere(0.2, 64, 64);
 	glPopMatrix();
-}
-
-void Player::update(GLfloat dt) {
-	position = position + (velocity*dt);
-	velocity -= velocity * dt;
-
 }

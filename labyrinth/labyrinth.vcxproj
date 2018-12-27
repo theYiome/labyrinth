@@ -178,9 +178,10 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="drawWorld.h" />
-    <ClInclude Include="mainLoop.h" />
+    <ClInclude Include="gameLoop.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="mazeGenerator.h" />
+    <ClInclude Include="Movable.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
   </ItemGroup>

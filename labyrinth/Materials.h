@@ -3,9 +3,9 @@
 
 // szmaragd
 const GLfloat EmeraldAmbient[4] = { 0.021500, 0.174500, 0.021500, 0.550000 };
-const GLfloat EmeraldDiffuse[4] = { 0.075680, 0.614240, 0.075680, 0.550000 };
+const GLfloat EmeraldDiffuse[4] = { 0.075680, 0.814240, 0.075680, 0.550000 };
 const GLfloat EmeraldSpecular[4] = { 0.633000, 0.727811, 0.633000, 0.550000 };
-const GLfloat EmeraldShininess = 76.8;
+const GLfloat EmeraldShininess = 100.0;
 
 //braz
 const GLfloat BronzeAmbient[4] = { 0.212500, 0.127500, 0.054000, 1.000000 };

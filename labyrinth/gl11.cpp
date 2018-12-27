@@ -82,9 +82,7 @@ camera_distance*cos(camera_theta + 0.1)*cos(camera_fi),
 camera_distance*sin(camera_theta + 0.1),
 camera_distance*cos(camera_theta + 0.1)*sin(camera_fi));
 
-GLfloat light0_position[4] = { 4.0*cos(light_theta)*cos(light_fi),
-					4.0*sin(light_theta),
-					4.0*cos(light_theta)*sin(light_fi),0.0 };
+GLfloat light0_position[4] = { 4.0*cos(light_theta)*cos(light_fi), 4.0*sin(light_theta), 4.0*cos(light_theta)*sin(light_fi), 0.0 };
 glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 
 glDisable(GL_LIGHTING);

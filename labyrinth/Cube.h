@@ -2,19 +2,18 @@
 #include "Drawable.h"
 #include "GLM/vec3.hpp"
 #include <GL/freeglut.h>
+#include "Movable.h"
 
-class Cube :
-	public Drawable
+class Cube : public Drawable, public Movable
 {
-	glm::tvec3 <GLfloat> position;
-	glm::tvec3 <GLfloat> velocity;
+public:
+
 	GLfloat size = 0.5;
 
-public:
 	glm::tvec3 <GLfloat> color;
-	Cube(int, int);
-	~Cube() = default;
+
 	void draw(void);
-	void update(GLfloat);
+
+	Cube(int, int);
 };
 

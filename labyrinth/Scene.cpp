@@ -6,33 +6,18 @@ static const GLfloat multi = 2.f;
 
 void Scene::update(GLfloat dt)
 {
-	player.update(dt);
+	//move player
+	player.targetPosition.x = 0.5f * player.squarePosition.x;
+	player.targetPosition.y = 0.5f * player.squarePosition.y;
+	player.move(dt);
 
-	camera.target = camera.target + (player.position - camera.target)*dt*multi;
+	//move camera
+	camera.targetPosition.x = player.position.x + 5.0;
+	camera.targetPosition.y = player.position.y + 0.5;
+	camera.move(dt);
 
-	static glm::tvec3 <GLfloat> tempPlayerPos;
-
-	tempPlayerPos.x = 0.5f * player.squarePosition.x;
-	tempPlayerPos.y = 0.5f * player.squarePosition.y;
-	tempPlayerPos.z = player.position.z;
-
-	player.position = player.position + (tempPlayerPos - player.position)*dt*12.f;
-
-	static glm::tvec3 <GLfloat> tempCam;
-	tempCam = camera.position;
-	tempCam.z = 0.f;
-
-	static glm::tvec3 <GLfloat> tempPlay;
-	tempPlay = player.position;
-	tempPlay.z = 0.f;
-	tempPlay.x += 5.f;
-
-	camera.position = camera.position + (tempPlay - tempCam)*dt;
-
-	camera.position.z = camera.desiredHeight;
-
-	camera.update(dt);
-	for (auto &var : cubeContainer) var.update(dt);
+	//adjust "look at" place to fit player position
+	camera.lookAt = camera.lookAt + (player.position - camera.lookAt)*dt*multi;
 }
 
 Camera& Scene::getCamera() {

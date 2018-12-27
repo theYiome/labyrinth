@@ -1,5 +1,5 @@
 #include <GL/freeglut.h>
-#include "mainLoop.h"
+#include "gameLoop.h"
 
 void reshapeScreen(int w, int h) {
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
@@ -10,22 +10,37 @@ void reshapeScreen(int w, int h) {
 	glLoadIdentity();
 }
 
+/*
+Global ambient light source parameters
+*/
+static const GLfloat GLOBAL_AMBIENT_LIGHT[4] = { 0.1, 0.1, 0.1, 1 };
+
+/*
+Local 0 light source parameters
+*/
+static const GLfloat LIGHT0_SPECULAR[4] = { 1.0, 1.0, 1.0, 1 };
+static const GLfloat LIGHT0_DIFFUSE[4] = { 0.5, 0.5, 0.5, 1 };
+
+//static const GLfloat TEST_DIFFUSE[4] = { 0.6, 0.7, 0.2, 1 };
+//static const GLfloat TEST_AMBIENT[4] = { 0.6, 0.7, 0.2, 1 };
+
 void initOpenGL() {
+
 	glClearColor(0, 0, 0, 0);
+
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 
-	glEnable(GL_NORMALIZE);
+	//glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
-	GLfloat light_ambient_global[4] = { 0.5,0.5,0.5,1 };          //new
-	GLfloat light0_specular[4] = { 1.0,1.0,1.0,1 };
-	GLfloat light0_diffuse[4] = { 0.5,0.5,0.5,1 };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient_global);   //new
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, GLOBAL_AMBIENT_LIGHT);
+	//glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+
+	//glLightfv(GL_LIGHT0, GL_SPECULAR, LIGHT0_SPECULAR);
+	//glLightfv(GL_LIGHT0, GL_DIFFUSE, LIGHT0_DIFFUSE);
 
 }
 
@@ -59,11 +74,11 @@ void inputHandler(unsigned char key, int x, int y) {
 		break;
 
 		case '1':
-			currentScene->getCamera().desiredHeight+= 0.11;
+			currentScene->getCamera().targetPosition.z += 0.11;
 		break;
 
 		case '2':
-			currentScene->getCamera().desiredHeight-= 0.11;
+			currentScene->getCamera().targetPosition.z -= 0.11;
 		break;
 
 	}
