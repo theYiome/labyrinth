@@ -1,11 +1,11 @@
 #include "Scene.h"
 #include "mazeGenerator.h"
+#include <random>
 
 
-static const GLfloat multi = 2.f;
+static const GLfloat multi = 0.8f;
 
-void Scene::update(GLfloat dt)
-{
+void Scene::update(GLfloat dt) {
 	//move player
 	player.targetPosition.x = 0.5f * player.squarePosition.x;
 	player.targetPosition.y = 0.5f * player.squarePosition.y;
@@ -15,6 +15,13 @@ void Scene::update(GLfloat dt)
 	camera.targetPosition.x = player.position.x + 5.0;
 	camera.targetPosition.y = player.position.y + 0.5;
 	camera.move(dt);
+
+	lamp1.targetPosition.x = player.position.x + 0;
+	lamp1.targetPosition.y = player.position.y + 0;
+	lamp1.targetPosition.z = player.position.z + 1.0;
+
+	lamp1.move(dt);
+	lamp2.move(dt);
 
 	//adjust "look at" place to fit player position
 	camera.lookAt = camera.lookAt + (player.position - camera.lookAt)*dt*multi;
@@ -28,22 +35,30 @@ std::vector<Drawable*> Scene::getDrawables(void) {
 	std::vector<Drawable*> toDraw;
 
 	toDraw.push_back(&player);
+	toDraw.push_back(&lamp1);
+	toDraw.push_back(&lamp2);
 	for (auto &var : cubeContainer) toDraw.push_back(&var);
 
 	return toDraw;
 }
 
-const char Scene::getThingIn(const int n, const int k) const
-{
+const char Scene::getThingIn(const int n, const int k) const {
 	return labyrinth[k + n * width].c;
 }
 
 Scene::Scene() {
 
+	//https://stackoverflow.com/questions/19665818/generate-random-numbers-using-c11-random-library
+	//seting generator up to generate random colors for lamps
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<double> dist(0.0, 1.0);
+
+	//generating the labyrinth
 	labyrinth = generateLabyrinth(width, height);
 
-	for (int i = 0; i < height; i++)
-	{
+
+	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (labyrinth[j + i * width].c == '#') cubeContainer.push_back(Cube(i, j));
 		}
@@ -57,9 +72,30 @@ Scene::Scene() {
 
 	cubeContainer.push_back(finalCube);
 	labyrinth[width - 2 + height * (height - 2)].c == '!';
+
+	//companion torus color
+	lamp1.DIFFUSE[0] = dist(mt);
+	lamp1.DIFFUSE[1] = dist(mt);
+	lamp1.DIFFUSE[2] = dist(mt);
+
+	//end torus placement and color
+	glm::tvec3 <GLfloat> temp;
+	temp.x = width * 0.5 - 1;
+	temp.y = height * 0.5 - 1;
+	temp.z = 2;
+
+	lamp2.targetPosition = temp;
+	lamp2.DIFFUSE[0] = dist(mt);
+	lamp2.DIFFUSE[1] = dist(mt);
+	lamp2.DIFFUSE[2] = dist(mt);
+
+	lamp2.position.x = -16;
+	lamp2.position.y = -16;
+	lamp2.position.z = 6;
+
 }
 
 
-Scene::~Scene()
-{
+Scene::~Scene() {
+	delete labyrinth;
 }

@@ -10,7 +10,7 @@ typedef std::chrono::milliseconds ms;
 
 using namespace std::chrono_literals;
 
-static Scene* currentScene = new Scene();
+static Scene* currentScene = nullptr;
 
 void shutdown() {
 	delete currentScene;
@@ -18,6 +18,8 @@ void shutdown() {
 
 
 void mainLoop() {
+	if (currentScene == nullptr) currentScene = new Scene();
+
 	//getting delta time
 	static auto t0 = Time::now();
 	ms fs = std::chrono::duration_cast<ms>(Time::now() - t0);
