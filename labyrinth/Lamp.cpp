@@ -8,10 +8,7 @@ int Lamp::lightAvailable[Lamp::MAX_LIGHTS] = { true, true, true, true, true, tru
 
 const int Lamp::getFirstAvailableID() {
 	int newID = 0;
-	while (lightAvailable[newID] == false) {
-		std::cout << "is false!" << std::endl;
-		newID++;
-	}
+	while (lightAvailable[newID] == false) newID++;
 	lightAvailable[newID] = false;
 	return newID;
 }
@@ -45,7 +42,7 @@ void Lamp::move(GLfloat dt) {
 }
 
 Lamp::Lamp() : ID(getFirstAvailableID()) {
-	speedFactor = 0.5f;
+	speedFactor = 0.8f;
 
 	if (ID != NO_RESOURCE) {
 		glEnable(LIGHTS_ENUM[ID]);
@@ -57,9 +54,10 @@ Lamp::Lamp() : ID(getFirstAvailableID()) {
 		const GLfloat TEMP_POS[4] = { position.x, position.y, position.z, 1 };
 		glLightfv(LIGHTS_ENUM[ID], GL_POSITION, TEMP_POS);
 
-		glLightf(LIGHTS_ENUM[ID], GL_CONSTANT_ATTENUATION, 0.1);
-		glLightf(LIGHTS_ENUM[ID], GL_LINEAR_ATTENUATION, 0.3);
-		std::cout << "USING LIGHT " << ID << std::endl;
+		glLightf(LIGHTS_ENUM[ID], GL_CONSTANT_ATTENUATION, 0.05);
+		glLightf(LIGHTS_ENUM[ID], GL_LINEAR_ATTENUATION, 0.2);
+		glLightf(LIGHTS_ENUM[ID], GL_QUADRATIC_ATTENUATION, 0.2);
+		std::cout << "USING GL_LIGHT" << ID + 1 << std::endl;
 	} else std::cout << "NO MORE LIGHTS AVAILABLE" << std::endl;
 
 }

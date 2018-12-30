@@ -22,18 +22,7 @@ void drawWorld(const std::vector<Drawable*> toDraw, Camera &cam) {
 		cam.rotation.x, cam.rotation.y, cam.rotation.z
 	);
 
-	dt += 0.001;
-	//std::cout << dt << std::endl;
-
-
-	glPushMatrix();
-		glColor3f(0.2, 0.2, 0.2);
-		glTranslatef(0, 0, 0.24);
-		glRectf(-0.25, -0.25, height*0.5f - 0.25, width*0.5f - 0.25);
-	glPopMatrix();
-
 	for (Drawable* var : toDraw) var->draw();
-	
 
 	glutSwapBuffers();
 	glutPostRedisplay();

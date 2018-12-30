@@ -168,6 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mazeGeneretor.cpp" />
@@ -180,6 +181,8 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="drawWorld.h" />
     <ClInclude Include="gameLoop.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="vecLenght.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="mazeGenerator.h" />

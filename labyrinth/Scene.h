@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Lamp.h"
+#include "Ground.h"
 
 class Scene
 {
@@ -13,10 +14,11 @@ class Scene
 	std::vector <Cube> cubeContainer;
 	Lamp lamp1;
 	Lamp lamp2;
+	Ground ground;
 
 public:
-	const int width = 29;
-	const int height = 29;
+	const int width;
+	const int height;
 	Node *labyrinth = nullptr;
 
 	Player player;
@@ -26,9 +28,9 @@ public:
 	Camera &getCamera();
 	std::vector <Drawable*> getDrawables(void);
 
-	const char getThingIn(const int n, const int k) const;
+	char& getThingIn(const int n, const int k) const;
 	
-	Scene();
+	Scene(const int, const int);
 	~Scene();
 };
 

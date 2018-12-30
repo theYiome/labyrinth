@@ -4,6 +4,7 @@
 #include <chrono>
 #include "drawWorld.h"
 #include "Scene.h"
+#include "vecLenght.h"
 
 typedef std::chrono::high_resolution_clock Time;
 typedef std::chrono::milliseconds ms;
@@ -16,9 +17,29 @@ void shutdown() {
 	delete currentScene;
 }
 
+bool nextScene = false;
+
+static void checkSceneStatus(GLfloat dt) {
+	static GLfloat timeLeft = 3.0;
+
+	if (currentScene == nullptr) currentScene = new Scene(3, 9);
+	else if (nextScene == true) {
+		currentScene->getCamera().targetPosition.z = 64;
+		timeLeft -= dt;
+		if (timeLeft < 0) {
+			const int newWidth = currentScene->height + 2;
+			const int newHeight = currentScene->width + 2;
+
+			delete currentScene;
+			currentScene = new Scene(newWidth, newHeight);
+			nextScene = false;
+			timeLeft = 3.0;
+		}
+	}
+}
+
 
 void mainLoop() {
-	if (currentScene == nullptr) currentScene = new Scene();
 
 	//getting delta time
 	static auto t0 = Time::now();
@@ -28,6 +49,8 @@ void mainLoop() {
 	//fixing if dt gets to high
 	dt = dt < 0.03 ? dt : 0.03;
 	t0 = Time::now();
+
+	checkSceneStatus(dt);
 
 	/*
 	update game logic
