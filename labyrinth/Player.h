@@ -12,8 +12,6 @@ public:
 
 	glm::ivec2 squarePosition;
 
-	glm::tvec3 <GLfloat> velocity;
-
 	Player();
 	
 	void draw(void);
