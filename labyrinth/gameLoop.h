@@ -26,8 +26,8 @@ static bool checkSceneStatus(GLfloat dt) {
 
 	if (currentScene == nullptr) {
 		//Startup, first labyrinth, first scene
-		currentScene = new Scene(3, 9);
-		Scene::skybox = new Skybox("skybox2.jpg");
+		currentScene = new Scene(11, 3);
+		Scene::skybox = new Skybox("RESOURCES/dark.png");
 	}
 	else if (nextScene == true) {
 		const GLfloat POS = 36;
@@ -60,6 +60,8 @@ static bool checkSceneStatus(GLfloat dt) {
 	return true;
 }
 
+static GLfloat secondsTimer = 0;
+static int fpsCount = 0;
 
 void mainLoop() {
 
@@ -68,9 +70,20 @@ void mainLoop() {
 	ms fs = std::chrono::duration_cast<ms>(Time::now() - t0);
 	GLfloat dt = fs.count()/(1000.0);
 
+	//fps measurement
+	secondsTimer += dt;
+	fpsCount++;
+
+	if (secondsTimer > 1) {
+		std::cout << "FPS: "<< fpsCount <<std::endl;
+		fpsCount = 0;
+		secondsTimer = 0;
+	}
+
 	//fixing if dt gets to high
 	dt = dt < 0.03 ? dt : 0.03;
 	t0 = Time::now();
+
 
 	/*
 	update game logic

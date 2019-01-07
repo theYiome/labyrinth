@@ -57,11 +57,11 @@ void inputHandler(int key, int x, int y) {
 		break;
 
 		case GLUT_KEY_F1:
-			currentScene->getCamera().targetPosition.z += verticalSpeed;
+			if(currentScene->getCamera().targetPosition.z < 60) currentScene->getCamera().targetPosition.z += verticalSpeed;
 		break;
 
 		case GLUT_KEY_F2:
-			currentScene->getCamera().targetPosition.z -= verticalSpeed;
+			if (currentScene->getCamera().targetPosition.z > 1) currentScene->getCamera().targetPosition.z -= verticalSpeed;
 		break;
 
 		case GLUT_KEY_F11:
