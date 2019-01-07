@@ -2,6 +2,7 @@
 #include "mazeGenerator.h"
 #include <random>
 
+Skybox* Scene::skybox = nullptr;
 
 static const GLfloat multi = 0.8f;
 
@@ -13,8 +14,11 @@ void Scene::update(GLfloat dt) {
 
 	//move camera
 	camera.targetPosition.x = player.position.x + 5.0;
-	camera.targetPosition.y = player.position.y + 0.5;
+	camera.targetPosition.y = player.position.y - 1;
 	camera.move(dt);
+
+	//move skybox so it is static for camera
+	skybox->position = camera.position;
 
 	lamp1.targetPosition.x = player.position.x + 0;
 	lamp1.targetPosition.y = player.position.y + 0;
@@ -38,6 +42,7 @@ std::vector<Drawable*> Scene::getDrawables(void) {
 	toDraw.push_back(&lamp1);
 	toDraw.push_back(&lamp2);
 	toDraw.push_back(&ground);
+	toDraw.push_back(skybox);
 	for (auto &var : cubeContainer) toDraw.push_back(&var);
 
 	return toDraw;

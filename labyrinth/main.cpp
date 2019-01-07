@@ -6,7 +6,7 @@ void reshapeScreen(int w, int h) {
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 0.1f, 100.0f);
+	gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 0.1f, 160.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -99,6 +99,7 @@ int main(int argc, char** argv)
 	if (glewInit() != GLEW_OK) return -2;
 
 	initOpenGL();
+
 	glutDisplayFunc(mainLoop);
 	glutReshapeFunc(reshapeScreen);
 	glutCloseFunc(shutdown);

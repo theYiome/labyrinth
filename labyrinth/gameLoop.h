@@ -19,12 +19,31 @@ void shutdown() {
 
 bool nextScene = false;
 
-static void checkSceneStatus(GLfloat dt) {
-	static GLfloat timeLeft = 3.0;
+static const GLfloat ANIMATION_TIME = 2;
 
-	if (currentScene == nullptr) currentScene = new Scene(3, 9);
+static bool checkSceneStatus(GLfloat dt) {
+	static GLfloat timeLeft = ANIMATION_TIME;
+
+	if (currentScene == nullptr) {
+		//Startup, first labyrinth, first scene
+		currentScene = new Scene(3, 9);
+		Scene::skybox = new Skybox("skybox2.jpg");
+	}
 	else if (nextScene == true) {
-		currentScene->getCamera().targetPosition.z = 64;
+		const GLfloat POS = 32;
+		currentScene->getCamera().targetPosition.x = POS;
+		currentScene->getCamera().targetPosition.y = POS;
+		currentScene->getCamera().targetPosition.z = POS;
+
+		currentScene->lamp1.move(dt);
+		currentScene->lamp2.move(dt);
+
+		currentScene->player.move(dt);
+
+		currentScene->getCamera().move(dt);
+		Scene::skybox->position = currentScene->getCamera().targetPosition;
+
+
 		timeLeft -= dt;
 		if (timeLeft < 0) {
 			const int newWidth = currentScene->height + 2;
@@ -33,9 +52,12 @@ static void checkSceneStatus(GLfloat dt) {
 			delete currentScene;
 			currentScene = new Scene(newWidth, newHeight);
 			nextScene = false;
-			timeLeft = 3.0;
+			timeLeft = ANIMATION_TIME;
 		}
+		return false;
 	}
+
+	return true;
 }
 
 
@@ -50,14 +72,13 @@ void mainLoop() {
 	dt = dt < 0.03 ? dt : 0.03;
 	t0 = Time::now();
 
-	checkSceneStatus(dt);
-
 	/*
 	update game logic
 	and render updated stuff below
 	*/
 
-	currentScene->update(dt);
+	if(checkSceneStatus(dt)) currentScene->update(dt);
+
 	
 	drawWorld(currentScene->getDrawables(), currentScene->getCamera());
 	

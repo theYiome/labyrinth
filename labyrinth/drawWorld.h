@@ -21,6 +21,9 @@ void drawWorld(const std::vector<Drawable*> toDraw, Camera &cam) {
 		cam.lookAt.x, cam.lookAt.y, cam.lookAt.z,
 		cam.rotation.x, cam.rotation.y, cam.rotation.z
 	);
+	
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
 
 	for (Drawable* var : toDraw) var->draw();
 

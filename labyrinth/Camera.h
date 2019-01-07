@@ -10,7 +10,8 @@ public:
 	glm::tvec3 <GLfloat> rotation;
 
 	Camera() {
-		position.x = position.y = position.z = 64;
+		const GLfloat k = 32;
+		position.x = position.y = position.z = k;
 		targetPosition.x = targetPosition.y = targetPosition.z = 6.f;
 
 		lookAt.x = lookAt.y = lookAt.z = 0;

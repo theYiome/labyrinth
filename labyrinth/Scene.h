@@ -1,4 +1,5 @@
 #pragma once
+#include "Skybox.h"
 #include <vector>
 #include <list>
 #include "mazeGenerator.h"
@@ -12,11 +13,13 @@ class Scene
 {
 	Camera camera;
 	std::vector <Cube> cubeContainer;
-	Lamp lamp1;
-	Lamp lamp2;
 	Ground ground;
 
 public:
+	Lamp lamp1;
+	Lamp lamp2;
+	static Skybox *skybox;
+
 	const int width;
 	const int height;
 	Node *labyrinth = nullptr;
