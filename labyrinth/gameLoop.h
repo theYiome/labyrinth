@@ -30,7 +30,7 @@ static bool checkSceneStatus(GLfloat dt) {
 		Scene::skybox = new Skybox("skybox2.jpg");
 	}
 	else if (nextScene == true) {
-		const GLfloat POS = 32;
+		const GLfloat POS = 36;
 		currentScene->getCamera().targetPosition.x = POS;
 		currentScene->getCamera().targetPosition.y = POS;
 		currentScene->getCamera().targetPosition.z = POS;
